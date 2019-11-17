@@ -25,7 +25,7 @@ TTA (Task Time Attack) - タスクをゲーミフィカルに進めるSlackBot
 - https://www.kwbtblog.com/entry/2019/03/21/000001
 
 # Todo
-- [ ] slsでデプロイして、lambdaが動作することを確認する
+- [x] slsでデプロイして、lambdaが動作することを確認する
 - [ ] SQSで処理できることを確認する
 - [ ] slackとの繋ぎこみ
 - [ ] タスク・サブタスクを任意の形式で受け取り、リアクションをフックして時間を記録して返す

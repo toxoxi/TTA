@@ -40,7 +40,7 @@ functions:
     handler: bin/main
     events:
       - http:
-          path: slack/bot
+          path: slack/tta
           method: post
           integration: lambda
 
