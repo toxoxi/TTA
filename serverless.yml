@@ -27,12 +27,22 @@ resources:
       Properties:
         QueueName: 'taskTimeAttackSqs'
 
-# package:
+package:
+  exclude:
+    - vendor/**
+    - Gemfile
+    - Gemfile.lock
+
+layers:
+  gems:
+    path: vendor
 
 functions:
   task-time-attack-http-function:
     name: task-time-attack-http-function
-    handler: handler.hello
+    handler: app.handleHttp
+    layers:
+      - {Ref: GemsLambdaLayer}
     events:
       - http:
           path: slack/task_time_attack
@@ -41,7 +51,7 @@ functions:
 
   task-time-attack-sqs-function:
     name: task-time-attack-sqs-function
-    handler: index.handlerSqs
+    handler: app.handleSqs
     events:
       - sqs:
           arn:
