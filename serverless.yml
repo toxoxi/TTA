@@ -15,7 +15,6 @@ provider:
     SLACK_VERIFICATION_TOKEN: '${env:SLACK_VERIFICATION_TOKEN}'
     SLACK_APP_ID: '${env:SLACK_APP_ID}'
     SLACK_BOT_TOKEN: '${env:SLACK_BOT_TOKEN}'
-    SLACK_USER_TOKEN: '${env:SLACK_USER_TOKEN}'
     AWS_SQS_URL:
       # CloudFormationの論理名をRefで参照することでSQSのURLを取得
       Ref: taskTimeAttackSqs # customを使って変数にすると良さそう
