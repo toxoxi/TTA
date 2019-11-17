@@ -5,7 +5,7 @@ provider:
   iamManagedPolicies:
     - 'arn:aws:iam::aws:policy/AmazonSQSFullAccess'
   endpointType: REGIONAL
-  runtime: go1.x
+  runtime: ruby2.5
   stage: dev
   region: ap-northeast-1
   deploymentBucket:
@@ -28,19 +28,15 @@ resources:
       Properties:
         QueueName: 'taskTimeAttackSqs'
 
-package:
- exclude:
-   - ./**
- include:
-   - ./bin/**
+# package:
 
 functions:
   task-time-attack-http-function:
     name: task-time-attack-http-function
-    handler: bin/main
+    handler: handler.hello
     events:
       - http:
-          path: slack/tta
+          path: slack/task_time_attack
           method: post
           integration: lambda
 
