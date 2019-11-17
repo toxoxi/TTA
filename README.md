@@ -1,46 +1,32 @@
-# TTA
-Task Time Attack
+TTA (Task Time Attack) - タスクをゲーミフィカルに進めるSlackBot  
 
----
+# Feature
+## MVP
+・タスクとサブタスク、サブタスクの想定時間を受け取り、TTAがスタートする
+・それぞれのサブタスクが終了したら :done: のリアクションをつけ、それにフックして時間を記録する
+・全てのサブタスクにdoneがついたら、レポートを出力する
 
-# UPDATE
+## Further
+・サブタスクの想定時間内に :done: がつかなかった場合、メンションを飛ばす
+・これらの情報をtogglかなんかに飛ばす
 
-Starting from [version 1.26](https://github.com/serverless/serverless/releases/tag/v1.26.0) Serverless Framework includes two Golang templates:
+# Architecture
+- Lambda, API Gateway
+  - Slackからイベントを受け取り、APIを叩く
+- SQS
+  - Slackは、イベントを送って3秒以内にレスポンスが無かった場合、リトライを行う仕様
+  - 3秒以上の処理を行う可能性がある場合は、SQSを使いQueueing後に処理することでレスポンス自体は即座に返す
+- DynamoDB
+  - タスクの詳細、レポートの保存
+- Serverless Framework(sls)
+  - コンソールぽちぽちよりも、コードで管理したいよね
 
-* `aws-go` - basic template with two functions
-* `aws-go-dep` - **recommended** template using [`dep`](https://github.com/golang/dep) package manager
+超参考になった記事
+https://www.kwbtblog.com/entry/2019/03/21/000001
 
-You can use them with `create` command:
-
-```
-serverless create -t aws-go-dep
-```
-
-Original README below.
-
----
-
-# Serverless Template for Golang
-
-This repository contains template for creating serverless services written in Golang.
-
-## Quick Start
-
-1. Create a new service based on this template
-
-```
-serverless create -u https://github.com/serverless/serverless-golang/ -p myservice
-```
-
-2. Compile function
-
-```
-cd myservice
-GOOS=linux go build -o bin/main
-```
-
-3. Deploy!
-
-```
-serverless deploy
-```
+# Todo
+- [ ] slsでデプロイして、lambdaが動作することを確認する
+- [ ] SQSで処理できることを確認する
+- [ ] slackとの繋ぎこみ
+- [ ] タスク・サブタスクを任意の形式で受け取り、リアクションをフックして時間を記録して返す
+- [ ] 全てのサブタスクに :done: がついたらレポートを出力する
