@@ -5,6 +5,7 @@ if ENV['IS_LOCAL'].nil?
 end
 
 require 'json'
+require './lib/slack/config'
 require './lib/slack/event'
 
 def handleHttp(event:, context:)
@@ -26,7 +27,7 @@ end
 
 private
 
-def makes_response(statusCode: 200, body: {})
+def make_response(statusCode: 200, body: {})
   {
     statusCode: statusCode,
     body: body.to_json

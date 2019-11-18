@@ -1,5 +1,3 @@
-require 'json'
-
 module Slack
   class Event
     def initialize(event)
@@ -7,12 +5,12 @@ module Slack
     end
 
     def validate
-      body = @event['body']
+      body = @event['body'] || {}
 
       msg = nil
-      if body['token'] != env['SLACK_VERIFICATION_TOKEN']
+      if body['token'] != Slack::Config.slack_verification_token
         msg = "Invalid token"
-      elsif body['api_app_id'] != env['SLACK_APP_ID']
+      elsif body['api_app_id'] != Slack::Config.slack_app_id
         msg = "Invalid api_app_id"
       end
       
